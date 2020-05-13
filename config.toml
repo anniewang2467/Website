@@ -11,7 +11,7 @@ theme = "hugo-sustain"
   post = "/:year/:month/:day/:slug"
 
 [params]
-  avatar = "yourimage.jpg"
+  avatar = "yourimage.png"
   author = "Anyi Wang"
   description = "Describe your website"
 
