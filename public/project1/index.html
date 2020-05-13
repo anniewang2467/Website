@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Anyi Wang" />
+    <meta name="description" content="Describe your website">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+    <title>Project 1_local</title>
+    <meta name="generator" content="Hugo 0.70.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="/blog/">BLOG</a></li>
+        
+        <li><a href="/projects/">PROJECTS</a></li>
+        
+        <li><a href="/resume/">RESUME</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="/project1/">Project 1_local</a></strong>
+          </h3>
+        </div>
+        <div class="blog-title">
+          <h4>
+          January 1, 0001
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
+
+
+<div id="r-markdown" class="section level2">
+<h2>R Markdown</h2>
+<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
+<p>#1. If the datasets are not tidy, you will need to reshape them so that every observation has its own row and every variable its own column. If the datasets are both already tidy, you will make them untidy with pivot_wider()/spread() and then tidy them again with pivot_longer/gather() to demonstrate your use of the functions. It’s fine to wait until you have your descriptives to use these functions (e.g., you might want to pivot_wider() to rearrange the data to make your descriptive statistics easier to look at); it’s fine long as you use them at least once!</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## Warning: package &#39;tidyverse&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## -- Attaching packages ------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.2.1     v purrr   0.3.3
+## v tibble  2.1.3     v stringr 1.4.0
+## v tidyr   1.0.2     v forcats 0.4.0
+## v readr   1.3.1</code></pre>
+<pre><code>## -- Conflicts ---------------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>data &lt;- storms %&gt;% na.omit %&gt;% slice(1:500) %&gt;% glimpse()</code></pre>
+<pre><code>## Observations: 500
+## Variables: 13
+## $ name        &lt;chr&gt; &quot;Alex&quot;, &quot;Alex&quot;, &quot;Alex&quot;, &quot;Alex&quot;, &quot;Alex&quot;, &quot;Alex&quot;, &quot;Alex&quot;,...
+## $ year        &lt;dbl&gt; 2004, 2004, 2004, 2004, 2004, 2004, 2004, 2004, 2004, 2...
+## $ month       &lt;dbl&gt; 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8...
+## $ day         &lt;int&gt; 31, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, ...
+## $ hour        &lt;dbl&gt; 18, 0, 6, 12, 18, 0, 6, 12, 18, 0, 6, 12, 18, 0, 6, 12,...
+## $ lat         &lt;dbl&gt; 30.3, 31.0, 31.5, 31.6, 31.6, 31.5, 31.4, 31.3, 31.8, 3...
+## $ long        &lt;dbl&gt; -78.3, -78.8, -79.0, -79.1, -79.2, -79.3, -79.4, -79.0,...
+## $ status      &lt;chr&gt; &quot;tropical depression&quot;, &quot;tropical depression&quot;, &quot;tropical...
+## $ category    &lt;ord&gt; -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 2, 2, ...
+## $ wind        &lt;int&gt; 25, 25, 25, 30, 35, 35, 40, 50, 50, 60, 70, 85, 85, 80,...
+## $ pressure    &lt;int&gt; 1010, 1009, 1009, 1009, 1009, 1007, 1005, 992, 993, 987...
+## $ ts_diameter &lt;dbl&gt; 0.0000, 0.0000, 0.0000, 0.0000, 57.5390, 57.5390, 172.6...
+## $ hu_diameter &lt;dbl&gt; 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,...</code></pre>
+<pre class="r"><code>data1 &lt;- transform(data, lat = as.character(lat), long = as.character(long))
+mydata &lt;- data1 %&gt;% unite(name, year, day, hour, col = &quot;unique&quot;, sep = &quot;.&quot;)
+Table1 &lt;- mydata %&gt;% select(unique, month, lat, long)
+Table2 &lt;- mydata %&gt;% select(unique, status, category, wind, pressure, ts_diameter, 
+    hu_diameter)
+finaldata &lt;- full_join(Table1, Table2, by = &quot;unique&quot;)</code></pre>
+<p>*I am using the Storms dataset, which originally has 10,010 observations, but I’m only using the first 500 in my dataset to conserve space and the loading speed in the R servers. I used the unite function, combining name, year, day, and hour, to create a unique variable with completely distinct data points. I separated this dataset into two new datasets called Table1 and Table2 before re-joining them by the unique variable, resulting in my final dataset.</p>
+<p>#2. Join your 2+ separate data sources into a single dataset
+#You will document the type of join that you do (left/right/inner/full), including a discussion of how many cases in each dataset were dropped (if any) and why you chose this particular join</p>
+<pre class="r"><code>finaldata &lt;- finaldata %&gt;% pivot_wider(names_from = &quot;month&quot;, values_from = &quot;status&quot;)
+finaldata &lt;- finaldata %&gt;% rename(Jul = &quot;7&quot;, Aug = &quot;8&quot;, Sep = &quot;9&quot;, Oct = &quot;10&quot;, Nov = &quot;11&quot;, 
+    Dec = &quot;12&quot;)
+finaldata &lt;- finaldata %&gt;% pivot_longer(9:14, names_to = &quot;month&quot;, values_to = &quot;status&quot;)
+
+finaldata &lt;- finaldata %&gt;% na.omit
+finaldata &lt;- finaldata[c(&quot;unique&quot;, &quot;month&quot;, &quot;lat&quot;, &quot;long&quot;, &quot;status&quot;, &quot;category&quot;, 
+    &quot;wind&quot;, &quot;pressure&quot;, &quot;ts_diameter&quot;, &quot;hu_diameter&quot;)]
+finaldata &lt;- finaldata %&gt;% separate(&quot;unique&quot;, into = c(&quot;name&quot;, &quot;year&quot;, &quot;day&quot;, &quot;hour&quot;), 
+    convert = T)
+finaldata &lt;- transform(finaldata, day = as.character(day), hour = as.character(hour))
+finaldata &lt;- transform(finaldata, year = as.character(year))</code></pre>
+<p><em>I used pivot longer and wider in order to rename the months from numerics to character abbreviations. I couldn’t change the names as data points, but I can change the names of column, which meant I needed to pivot wider my data first, rename everything, then pivot longer it back to a tidy dataset.</em></p>
+<p>#3. Create summary statistics
+#Use all six core dplyr functions (filter, select, arrange, group_by, mutate, summarize) to manipulate and explore your dataset. For mutate, create a new variable that is a function of at least one other variable, preferably using a dplyr vector function (see dplyr cheatsheet). It’s totally fine to use the _if, _at, _all versions of mutate/summarize instead (indeed, it is encouraged if you have lots of variables)</p>
+<pre class="r"><code>finaldata %&gt;% filter(wind == max(wind)) %&gt;% select(name) %&gt;% distinct()</code></pre>
+<pre><code>##   name
+## 1 Ivan</code></pre>
+<p><em>The hurricane that experienced the highest wind speed in this dataset is Ivan.</em></p>
+<pre class="r"><code>finaldata %&gt;% filter(pressure == max(pressure)) %&gt;% select(name) %&gt;% distinct()</code></pre>
+<pre><code>##      name
+## 1 Hermine</code></pre>
+<p><em>The hurricane that experienced the highest pressure in this dataset is Hermine.</em></p>
+<pre class="r"><code>finaldata %&gt;% filter(wind == min(wind)) %&gt;% select(name) %&gt;% distinct()</code></pre>
+<pre><code>##   name
+## 1 Ivan</code></pre>
+<p><em>The hurricane that experienced the lowest wind speed in this dataset is Ivan.</em></p>
+<pre class="r"><code>finaldata %&gt;% filter(pressure == min(pressure)) %&gt;% select(name) %&gt;% distinct()</code></pre>
+<pre><code>##   name
+## 1 Ivan</code></pre>
+<p><em>The hurricane that experienced the lowest pressure in this dataset is Ivan.</em></p>
+<pre class="r"><code>finaldata %&gt;% summarize(mean(wind, na.rm = T))</code></pre>
+<pre><code>##   mean(wind, na.rm = T)
+## 1                 60.05</code></pre>
+<p><em>The mean wind speed of all the hurricanes in this dataset is 60.05 knots.</em></p>
+<pre class="r"><code>finaldata %&gt;% summarize(sd(wind, na.rm = T))</code></pre>
+<pre><code>##   sd(wind, na.rm = T)
+## 1            31.86028</code></pre>
+<p><em>The standard deviation for wind speed of all the hurricanes in this dataset is 31.8602834.</em></p>
+<pre class="r"><code>finaldata %&gt;% summarize(n_hurricanes = n_distinct(name, year))</code></pre>
+<pre><code>##   n_hurricanes
+## 1           17</code></pre>
+<p><em>There are 17 distinct hurricanes in this dataset.</em></p>
+<pre class="r"><code>finaldata %&gt;% summarize(median(pressure, na.rm = T))</code></pre>
+<pre><code>##   median(pressure, na.rm = T)
+## 1                         997</code></pre>
+<p><em>The median pressure of all the hurricanes in this dataset is 997.</em></p>
+<pre class="r"><code>finaldata %&gt;% group_by(name, year) %&gt;% summarize(meanwind = mean(wind))</code></pre>
+<pre><code>## # A tibble: 17 x 3
+## # Groups:   name [17]
+##    name     year  meanwind
+##    &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
+##  1 AL102004 2004      26.2
+##  2 Alex     2004      64.4
+##  3 Bonnie   2004      35.4
+##  4 Charley  2004      65.7
+##  5 Danielle 2004      56.8
+##  6 Emily    2005      80.2
+##  7 Franklin 2005      44.8
+##  8 Gaston   2004      38.8
+##  9 Gert     2005      31.9
+## 10 Harvey   2005      46.9
+## 11 Hermine  2004      34.7
+## 12 Ivan     2004      89.1
+## 13 Jeanne   2004      59.2
+## 14 Karl     2004      86.4
+## 15 Lisa     2004      47.7
+## 16 Matthew  2004      35  
+## 17 Otto     2004      35.5</code></pre>
+<p><em>This shows the mean wind speed of each distinct hurricane.</em></p>
+<pre class="r"><code>finaldata %&gt;% group_by(name, year) %&gt;% summarize(medwind = median(wind))</code></pre>
+<pre><code>## # A tibble: 17 x 3
+## # Groups:   name [17]
+##    name     year  medwind
+##    &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;
+##  1 AL102004 2004     25  
+##  2 Alex     2004     67.5
+##  3 Bonnie   2004     30  
+##  4 Charley  2004     65  
+##  5 Danielle 2004     45  
+##  6 Emily    2005     80  
+##  7 Franklin 2005     45  
+##  8 Gaston   2004     35  
+##  9 Gert     2005     32.5
+## 10 Harvey   2005     50  
+## 11 Hermine  2004     35  
+## 12 Ivan     2004    110  
+## 13 Jeanne   2004     60  
+## 14 Karl     2004     95  
+## 15 Lisa     2004     47.5
+## 16 Matthew  2004     35  
+## 17 Otto     2004     35</code></pre>
+<p><em>This shows the median wind speed of each distinct hurricane.</em></p>
+<pre class="r"><code>finaldata %&gt;% group_by(name, year) %&gt;% summarize(sdpressure = sd(pressure, na.rm = T)) %&gt;% 
+    arrange(sdpressure)</code></pre>
+<pre><code>## # A tibble: 17 x 3
+## # Groups:   name [17]
+##    name     year  sdpressure
+##    &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;
+##  1 Otto     2004       0.699
+##  2 AL102004 2004       1.51 
+##  3 Gert     2005       2.00 
+##  4 Matthew  2004       2.96 
+##  5 Bonnie   2004       2.97 
+##  6 Harvey   2005       3.37 
+##  7 Franklin 2005       3.47 
+##  8 Hermine  2004       4.66 
+##  9 Lisa     2004       5.42 
+## 10 Gaston   2004       7.23 
+## 11 Charley  2004      16.4  
+## 12 Jeanne   2004      16.5  
+## 13 Danielle 2004      17.6  
+## 14 Alex     2004      17.9  
+## 15 Karl     2004      19.9  
+## 16 Emily    2005      25.4  
+## 17 Ivan     2004      33.9</code></pre>
+<p><em>This shows the standard deviation of pressure for each distinct hurricane, arranged in ascending order.</em></p>
+<pre class="r"><code>finaldata %&gt;% group_by(name, year) %&gt;% summarize(max(category, na.rm = T))</code></pre>
+<pre><code>## # A tibble: 17 x 3
+## # Groups:   name [17]
+##    name     year  `max(category, na.rm = T)`
+##    &lt;chr&gt;    &lt;chr&gt; &lt;ord&gt;                     
+##  1 AL102004 2004  -1                        
+##  2 Alex     2004  3                         
+##  3 Bonnie   2004  0                         
+##  4 Charley  2004  4                         
+##  5 Danielle 2004  2                         
+##  6 Emily    2005  5                         
+##  7 Franklin 2005  0                         
+##  8 Gaston   2004  1                         
+##  9 Gert     2005  0                         
+## 10 Harvey   2005  0                         
+## 11 Hermine  2004  0                         
+## 12 Ivan     2004  5                         
+## 13 Jeanne   2004  3                         
+## 14 Karl     2004  4                         
+## 15 Lisa     2004  1                         
+## 16 Matthew  2004  0                         
+## 17 Otto     2004  0</code></pre>
+<p><em>This shows the maximum category for each distinct hurricane.</em></p>
+<pre class="r"><code>finaldata %&gt;% group_by(name, year) %&gt;% summarize(min(category, na.rm = T))</code></pre>
+<pre><code>## # A tibble: 17 x 3
+## # Groups:   name [17]
+##    name     year  `min(category, na.rm = T)`
+##    &lt;chr&gt;    &lt;chr&gt; &lt;ord&gt;                     
+##  1 AL102004 2004  -1                        
+##  2 Alex     2004  -1                        
+##  3 Bonnie   2004  -1                        
+##  4 Charley  2004  -1                        
+##  5 Danielle 2004  -1                        
+##  6 Emily    2005  -1                        
+##  7 Franklin 2005  -1                        
+##  8 Gaston   2004  -1                        
+##  9 Gert     2005  -1                        
+## 10 Harvey   2005  -1                        
+## 11 Hermine  2004  -1                        
+## 12 Ivan     2004  -1                        
+## 13 Jeanne   2004  -1                        
+## 14 Karl     2004  -1                        
+## 15 Lisa     2004  -1                        
+## 16 Matthew  2004  -1                        
+## 17 Otto     2004  -1</code></pre>
+<p><em>This shows the minimum category for each distinct hurricane.</em></p>
+<pre class="r"><code>finaldata %&gt;% select(wind, pressure) %&gt;% summarize_if(is.numeric, list(Q3 = quantile), 
+    probs = 0.75, na.rm = T)</code></pre>
+<pre><code>##   wind_Q3 pressure_Q3
+## 1      80     1003.25</code></pre>
+<p><em>This shows the third quantile measures for wind speed and pressure of all the hurricanes in this dataset.</em></p>
+<p>#4. Make visualizations (three plots)</p>
+<pre class="r"><code>library(ggplot2)
+
+finaldata %&gt;% select_if(is.numeric) %&gt;% cor %&gt;% as.data.frame %&gt;% rownames_to_column %&gt;% 
+    pivot_longer(-1) %&gt;% ggplot(aes(rowname, name, fill = value)) + geom_tile() + 
+    geom_text(aes(label = round(value, 2))) + xlab(&quot;&quot;) + ylab(&quot;&quot;) + scale_fill_gradient2(low = &quot;red&quot;, 
+    high = &quot;blue&quot;) + ggtitle(&quot;Hurricanes Correlation Heatmap&quot;)</code></pre>
+<p><img src="/project1_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><em>By creating a correlation heatmap for the numeric variables in, we see that wind speed and pressure have the strongest negative correlation. This is right since when a tropical cyclone gains intensity, it becomes a hurricane. The barometric pressure at the ocean’s surface drops to extremely low levels inside a hurricane. Pressure has a negative correlation with all the other variables. Wind speed and diameter of the area experiencing hurricane strength winds have the strongest positive correlation, which is understandable as larger areas affected by hurricane strength winds would also have faster wind speeds. Wind speed and diameter of the area experiencing tropical storm strength winds are also positively correlated, but less so compared to wind speed and diameter of the area experiencing hurricane strength winds. This makes sense as tropical storm strength winds are lower than hurricane strength winds. Diameter of the area experiencing tropical storm strength winds and diameter of the area experiencing hurricane strength winds are also positively correlated.</em></p>
+<pre class="r"><code>ggplot(finaldata, aes(x = name, y = wind, fill = status)) + geom_bar(stat = &quot;summary&quot;, 
+    fun.y = &quot;mean&quot;, position = &quot;dodge&quot;) + theme(axis.text.x = element_text(angle = 90, 
+    hjust = 1)) + xlab(&quot;Hurricane Names&quot;) + ylab(&quot;Wind Speeds (knots)&quot;) + scale_fill_brewer(palette = &quot;Set1&quot;) + 
+    ggtitle(&quot;Wind Speeds vs. Hurricanes by Status&quot;)</code></pre>
+<p><img src="/project1_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><em>This bar graph compares the wind speeds of each hurricane and status. People can see when at what wind speeds each storm change its categorization from tropical depression to tropical storm to hurricane. We can see that tropical depressions occur around wind speeds at around 30 knots or slower. Tropical storms occur around wind speeds at between around 30 knots and 50 knots. Hurricanes occur around wind speeds at around 50 knots or higher. </em></p>
+<pre class="r"><code>wrapper &lt;- function(x) {
+    paste(strwrap(x), collapse = &quot;\n&quot;)
+}
+
+my_title &lt;- &quot;Tropical Storm Winds vs. Hurricane Winds Affected Diameter Areas by Category&quot;
+library(ggplot2)
+ggplot(finaldata, aes(ts_diameter, hu_diameter)) + geom_point(aes(color = category), 
+    size = 1.5) + xlab(&quot;Diameter of Area with Tropical Storm Winds (miles)&quot;) + ylab(&quot;Diameter of Area with Hurricane Strength Winds (miles)&quot;) + 
+    ggtitle(wrapper(my_title)) + scale_x_continuous(breaks = seq(0, 800, 100)) + 
+    scale_y_continuous(breaks = seq(0, 250, 25)) + scale_color_brewer()</code></pre>
+<p><img src="/project1_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+<em>This scatterplot compares the diameter of the area experiencing hurricane strength winds and the diameter of the area experiencing tropical storm strength winds based on the category of the storm. The storms with the lowest category of tropical depression have the lowest diameter of the area experiencing hurricane strength winds and the diameter of the area experiencing tropical storm strength winds. All of the storms have more diameter of the area experiencing tropical storm strength winds compared to the diameter of the area experiencing hurricane strength winds. Generally speaking, storms of a higher category have proportionally higer ratios of diameter of the area experiencing hurricane strength winds to diameter of the area experiencing tropical storm trength winds compared to storms of a lower category.</em></p>
+<p>#5. Perform k-means/PAM clustering or PCA on (at least) your numeric variables</p>
+<pre class="r"><code>library(cluster)
+library(GGally)</code></pre>
+<pre><code>## Warning: package &#39;GGally&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;GGally&#39;:
+##   method from   
+##   +.gg   ggplot2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;GGally&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     nasa</code></pre>
+<pre class="r"><code>silwidth &lt;- vector()
+for (i in 2:10) {
+    silwidth[i] &lt;- (finaldata %&gt;% select(10:13) %&gt;% daisy(&quot;gower&quot;) %&gt;% pam(k = i, 
+        diss = T))$silinfo$avg.width
+}
+ggplot() + geom_path(aes(x = 2:10, y = silwidth[2:10])) + ggtitle(&quot;Picking number of clusters with PAM: Silhouette width&quot;)</code></pre>
+<p><img src="/project1_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<em>In the code, we piped the numeric data columns of our dataset, finaldata, into a dissimilarity matrix calculation. It’s set up to calculate the silhouette widths at different numbers of clusters, from 2 to 10. The silouette width measures of the coherence of a clustering solution, so we can pick the number of clusters with PAM. The highest point is at x=2, so it recommends we pick 2 clusters.</em></p>
+<pre class="r"><code>finaldataclust &lt;- finaldata %&gt;% select(10:13) %&gt;% pam(k = 2)
+finaldata %&gt;% ggpairs(columns = 10:13)</code></pre>
+<p><img src="/project1_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<pre class="r"><code>finaldata %&gt;% mutate(cluster = as.factor(finaldataclust$clustering)) %&gt;% ggpairs(columns = 10:13, 
+    aes(color = cluster))</code></pre>
+<p><img src="/project1_files/figure-html/unnamed-chunk-22-2.png" width="672" />
+<em>By using this, we Visualize all pairwise combinations of the 4 variables. It shows the correlations, scatterplots, and areas of overlap between each pairwise combination. Wind speed and pressure have the strongest negative correlation while wind speed and diameter of the area experiencing hurricane trength winds have the strongest positive correlation.</em></p>
+<pre class="r"><code>finaldataclust$medoids</code></pre>
+<pre><code>##      wind pressure ts_diameter hu_diameter
+## [1,]   45     1000     92.0624      0.0000
+## [2,]   95      965    258.9255     74.8007</code></pre>
+<pre class="r"><code>finaldata %&gt;% slice(finaldataclust$id.med)</code></pre>
+<pre><code>##   name year day hour month  lat  long         status category wind pressure
+## 1 Lisa 2004  22   12   Sep 14.2 -41.1 tropical storm        0   45     1000
+## 2 Alex 2004   4   18   Aug 37.8 -68.3      hurricane        2   95      965
+##   ts_diameter hu_diameter
+## 1     92.0624      0.0000
+## 2    258.9255     74.8007</code></pre>
+<pre class="r"><code>finaldataclust$silinfo$avg.width</code></pre>
+<pre><code>## [1] 0.5497947</code></pre>
+<pre class="r"><code>finaldataclust$silinfo$clus.avg.widths</code></pre>
+<pre><code>## [1] 0.6569861 0.3541856</code></pre>
+<pre class="r"><code>plot(finaldataclust, which = 2)</code></pre>
+<p><img src="/project1_files/figure-html/unnamed-chunk-23-1.png" width="672" />
+<em>By using running this code, we can find the average silhouette widths and use the interpretations from the slides. The overall average silhouette widths of 0.5497947 suggest a reasonable structure has been found. The average silhouette width of cluster 1 is 0.656986 and cluster 2 is 0.3541856, which suggests that the structure for cluster 1 is more reasonable and the structure for cluster 2 is weaker and could be artificial.</em></p>
+</div>
+
+              <hr>
+              <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div>
+            </div>
+          </div>
+          <hr>
+        <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = '';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+        </div>
+      </div>
+      
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="/js/docs.min.js"></script>
+<script src="/js/main.js"></script>
+
+<script src="/js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>

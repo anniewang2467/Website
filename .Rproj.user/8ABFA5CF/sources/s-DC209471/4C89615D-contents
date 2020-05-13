@@ -1,0 +1,183 @@
+---
+title: "Project 1_local"
+author: 'Anyi Wang (EID: aw34266)'
+date: "3/13/2020"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+require(knitr)
+# Set so that long lines in R will be wrapped:
+opts_chunk$set(tidy.opts=list(width.cutoff=80),tidy=TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+#1. If the datasets are not tidy, you will need to reshape them so that every observation has its own row and every variable its own column. If the datasets are both already tidy, you will make them untidy with pivot_wider()/spread() and then tidy them again with pivot_longer/gather() to demonstrate your use of the functions. It’s fine to wait until you have your descriptives to use these functions (e.g., you might want to pivot_wider() to rearrange the data to make your descriptive statistics easier to look at); it’s fine long as you use them at least once!
+
+```{R}
+library(dplyr)
+library(tidyverse)
+data <- storms%>%na.omit%>%glimpse()
+data1 <- transform(data, lat = as.character(lat),long = as.character(long))
+mydata<-data1%>% unite(name, year, day, hour, col = "unique", sep=".")
+Table1 <- mydata%>%select(unique, month, lat, long)
+Table2 <- mydata%>%select(unique, status, category, wind, pressure, ts_diameter, hu_diameter)
+finaldata <- full_join(Table1, Table2, by= "unique")
+summer <- finaldata%>%filter(month %in% c("6", "7", "8"))
+summer <-summer%>%mutate(Binary=ifelse(status=="hurricane",1,0))
+summer <-summer%>%mutate(outcome=ifelse(status=="hurricane","hurricane","not hurricane"))
+View(summer)
+summer$outcome<-factor(summer$outcome)
+head(summer)
+```
+*I am using the Storms dataset, which originally has 10,010 observations, but I'm only using the first 500 in my dataset to conserve space and the loading speed in the R servers. I used the unite function, combining name, year, day, and hour, to create a unique variable with completely distinct data points. I separated this dataset into two new datasets called Table1 and Table2 before re-joining them by the unique variable, resulting in my final dataset.
+
+#2. Join your 2+ separate data sources into a single dataset
+#You will document the type of join that you do (left/right/inner/full), including a discussion of how many cases in each dataset were dropped (if any) and why you chose this particular join
+
+```{R}
+finaldata<- finaldata %>% mutate(row = row_number())%>% pivot_wider(names_from="month", values_from="row")
+finaldata<- finaldata%>%rename("Jan" = "1","May" = "5","Jun"= "6","Jul"="7","Aug"="8", "Sep"="9", "Oct"="10","Nov" = "11", "Dec" = "12")
+finaldata<- finaldata%>% pivot_longer(10:18, names_to="month", values_to="row")%>%select(-row)
+View(finaldata)
+finaldata<- finaldata%>%na.omit
+finaldata <- finaldata[c("unique", "month", "lat", "long", "status", "category", "wind", "pressure", "ts_diameter", "hu_diameter")]
+finaldata <- finaldata%>%  separate("unique",into=c("name","year","day","hour"), convert=T)
+finaldata <- transform(finaldata, day = as.character(day), hour = as.character(hour))
+finaldata <- transform(finaldata, year = as.character(year))
+```
+*I used pivot longer and wider in order to rename the months from numerics to character abbreviations. I couldn't change the names as data points, but I can change the names of column, which meant I needed to pivot wider my data first, rename everything, then pivot longer it back to a tidy dataset.*
+
+#3. Create summary statistics
+#Use all six core dplyr functions (filter, select, arrange, group_by, mutate, summarize) to manipulate and explore your dataset. For mutate, create a new variable that is a function of at least one other variable, preferably using a dplyr vector function (see dplyr cheatsheet). It’s totally fine to use the _if, _at, _all versions of mutate/summarize instead (indeed, it is encouraged if you have lots of variables)
+
+```{R}
+finaldata%>%filter(wind==max(wind))%>%select(name)%>%distinct()
+```
+*The hurricane that experienced the highest wind speed in this dataset is Ivan.*
+```{R}
+finaldata%>%filter(pressure==max(pressure))%>%select(name)%>%distinct()
+```
+*The hurricane that experienced the highest pressure in this dataset is Hermine.*
+```{R}
+finaldata%>%filter(wind==min(wind))%>%select(name)%>%distinct()
+```
+*The hurricane that experienced the lowest wind speed in this dataset is Ivan.*
+```{R}
+finaldata%>%filter(pressure==min(pressure))%>%select(name)%>%distinct()
+```
+*The hurricane that experienced the lowest pressure in this dataset is Ivan.*
+```{R}
+finaldata%>%summarize(mean(wind, na.rm=T))
+```
+*The mean wind speed of all the hurricanes in this dataset is `r finaldata%>%summarize(mean(wind, na.rm=T))` knots.*
+```{R}
+finaldata%>%summarize(sd(wind, na.rm=T))
+```
+*The standard deviation for wind speed of all the hurricanes in this dataset is `r finaldata%>%summarize(sd(wind, na.rm=T))`.*
+```{R}
+finaldata%>%summarize(n_hurricanes=n_distinct(name, year))
+```
+*There are `r finaldata%>%summarize(n_hurricanes=n_distinct(name, year))` distinct hurricanes in this dataset.*
+```{R}
+finaldata%>%summarize(median(pressure, na.rm=T))
+```
+*The median pressure of all the hurricanes in this dataset is `r finaldata%>%summarize(median(pressure, na.rm=T))`.*
+```{R}
+finaldata%>%group_by(name,year)%>%summarize(meanwind=mean(wind))
+```
+*This shows the mean wind speed of each distinct hurricane.*
+```{R}
+finaldata%>%group_by(name,year)%>%summarize(medwind=median(wind))
+```
+*This shows the median wind speed of each distinct hurricane.*
+```{R}
+finaldata%>%group_by(name,year)%>%summarize(sdpressure=sd(pressure, na.rm=T))%>%arrange(sdpressure)
+```
+*This shows the standard deviation of pressure for each distinct hurricane, arranged in ascending order.*
+```{R}
+finaldata%>%group_by(name,year)%>%summarize(max(category, na.rm=T))
+```
+*This shows the maximum category for each distinct hurricane.*
+```{R}
+finaldata%>%group_by(name,year)%>%summarize(min(category, na.rm=T))
+```
+*This shows the minimum category for each distinct hurricane.*
+```{R}
+finaldata%>%select(wind, pressure)%>%summarize_if(is.numeric, list(Q3=quantile), probs=.75, na.rm=T)
+```
+*This shows the third quantile measures for wind speed and pressure of all the hurricanes in this dataset.*
+
+#4. Make visualizations (three plots)
+
+```{R}
+library(ggplot2)
+
+finaldata%>%select_if(is.numeric)%>%cor%>%as.data.frame%>%  rownames_to_column%>%pivot_longer(-1)%>%ggplot(aes(rowname,name,fill=value))+geom_tile()+geom_text(aes(label=round(value,2)))+ xlab("")+ylab("")+ scale_fill_gradient2(low="red",high="blue") + ggtitle("Hurricanes Correlation Heatmap")
+```
+
+*By creating a correlation heatmap for the numeric variables in, we see that wind speed and pressure have the strongest negative correlation. This is right since when a tropical cyclone gains intensity, it becomes a hurricane. The barometric pressure at the ocean's surface drops to extremely low levels inside a hurricane. Pressure has a negative correlation with all the other variables. Wind speed and diameter of the area experiencing hurricane strength winds have the strongest positive correlation, which is understandable as larger areas affected by hurricane strength winds would also have faster wind speeds. Wind speed and diameter of the area experiencing tropical storm strength winds are also positively correlated, but less so compared to wind speed and diameter of the area experiencing hurricane strength winds. This makes sense as tropical storm strength winds are lower than hurricane strength winds. Diameter of the area experiencing tropical storm strength winds and diameter of the area experiencing hurricane strength winds are also positively correlated.*
+
+```{R}
+ggplot(finaldata, aes(x = name, y = wind, fill=status))+  geom_bar(stat="summary",fun.y="mean", position="dodge")+ theme(axis.text.x = element_text(angle=90, hjust=1))+xlab("Hurricane Names")+ylab("Wind Speeds (knots)")+scale_fill_brewer(palette = "Set1")+ggtitle("Wind Speeds vs. Hurricanes by Status") 
+```
+
+*This bar graph compares the wind speeds of each hurricane and status. People can see when at what wind speeds each storm change its categorization from tropical depression to tropical storm to hurricane. We can see that tropical depressions occur around wind speeds at around 30 knots or slower. Tropical storms occur around wind speeds at between around 30 knots and 50 knots. Hurricanes occur around wind speeds at around 50 knots or higher. *
+
+```{R}
+
+wrapper <- function(x) 
+{
+  paste(strwrap(x), collapse = "\n")
+}
+
+my_title <- "Tropical Storm Winds vs. Hurricane Winds Affected Diameter Areas by Category"
+library(ggplot2)
+ggplot(finaldata, aes(ts_diameter,hu_diameter))+  geom_point(aes(color=category), size = 1.5)+xlab("Diameter of Area with Tropical Storm Winds (miles)")+ylab("Diameter of Area with Hurricane Strength Winds (miles)")+ggtitle(wrapper(my_title))+scale_x_continuous(breaks=seq(0, 800, 100))+scale_y_continuous(breaks=seq(0, 250, 25))+scale_color_brewer()  
+```
+*This scatterplot compares the diameter of the area experiencing hurricane strength winds and the diameter of the area experiencing tropical storm strength winds based on the category of the storm. The storms with the lowest category of tropical depression have the lowest diameter of the area experiencing hurricane strength winds and the diameter of the area experiencing tropical storm strength winds. All of the storms have more diameter of the area experiencing tropical storm strength winds compared to the diameter of the area experiencing hurricane strength winds. Generally speaking, storms of a higher category have proportionally higer ratios of diameter of the area experiencing hurricane strength winds to diameter of the area experiencing tropical storm trength winds compared to storms of a lower category.*
+
+#5. Perform k-means/PAM clustering or PCA on (at least) your numeric variables
+```{R}
+library(cluster)
+library(GGally)
+silwidth<-vector() 
+for(i in 2:10){ 
+silwidth[i]<-(finaldata%>%select(10:13)%>%daisy("gower")%>%pam(k=i,diss=T))$silinfo$avg.width 
+} 
+ggplot()+geom_path(aes(x=2:10,y=silwidth[2:10]))+ggtitle("Picking number of clusters with PAM: Silhouette width")
+```
+*In the code, we piped the numeric data columns of our dataset, finaldata, into a dissimilarity matrix calculation. It's set up to calculate the silhouette widths at different numbers of clusters, from 2 to 10. The silouette width measures of the coherence of a clustering solution, so we can pick the number of clusters with PAM. The highest point is at x=2, so it recommends we pick 2 clusters.*
+```{R}
+finaldataclust<-finaldata%>%select(10:13)%>%pam(k=2) 
+finaldata%>%ggpairs(columns = 10:13)
+
+finaldata%>%mutate(cluster=as.factor(finaldataclust$clustering))%>%
+  ggpairs(columns = 10:13,aes(color=cluster))
+```
+*By using this, we Visualize all pairwise combinations of the 4 variables. It shows the correlations, scatterplots, and areas of overlap between each pairwise combination. Wind speed and pressure have the strongest negative correlation while wind speed and diameter of the area experiencing hurricane trength winds have the strongest positive correlation.* 
+
+```{R}
+finaldataclust$medoids
+finaldata%>%slice(finaldataclust$id.med)
+
+finaldataclust$silinfo$avg.width
+finaldataclust$silinfo$clus.avg.widths
+
+plot(finaldataclust, which = 2)
+
+```
+*By using running this code, we can find the average silhouette widths and use the interpretations from the slides. The overall average silhouette widths of 0.5497947 suggest a reasonable structure has been found. The average silhouette width of cluster 1 is 0.656986 and cluster 2 is 0.3541856, which suggests that the structure for cluster 1 is more reasonable and the structure for cluster 2 is weaker and could be artificial.* 
+
