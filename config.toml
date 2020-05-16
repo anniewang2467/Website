@@ -21,7 +21,7 @@ theme = "hugo-sustain"
 
 [params.social]
   Email         = "annie.wang.2467@gmail.com"
-  Twitter       = "@Wang2467"
+  Twitter       = "Wang2467" 
 
 ## Main Menu
 [[menu.main]]
