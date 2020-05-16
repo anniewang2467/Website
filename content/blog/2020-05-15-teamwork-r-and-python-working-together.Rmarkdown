@@ -25,15 +25,13 @@ hi
 #plot
 plot(cars)
 ```
-```{R}
-library(reticulate)
-Sys.setenv(RETICULATE_PYTHON="/usr/bin/python")
-use_python("usr/bin/python")
-```
+
+
 ```{python}
 #python code
 print(2+2)
 ```
+
 
 
 Everybody stand back. I know regular expressions!

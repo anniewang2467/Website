@@ -42,6 +42,7 @@ plot(cars)
 <img src="/blog/2020-05-15-teamwork-r-and-python-working-together_files/figure-html/cars-1.png" width="672" />
 
 
+
 ```python
 #python code
 print(2+2)

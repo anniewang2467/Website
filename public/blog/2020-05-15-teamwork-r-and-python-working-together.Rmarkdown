@@ -26,6 +26,7 @@ hi
 plot(cars)
 ```
 
+
 ```{python}
 #python code
 print(2+2)
