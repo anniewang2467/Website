@@ -12,6 +12,27 @@
     
     
     <item>
+      <title>Teamwork: R and Python Working Together!</title>
+      <link>/blog/teamwork-r-and-python-working-together/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/teamwork-r-and-python-working-together/</guid>
+      <description>Hello World!
+I&amp;rsquo;m so excited because&amp;hellip; this is my first blogpost EVER!!!
+Anyways, through Computational Biology and Bioinformatics in my last semester senior year, I have learned a small amount of Python and (a smidge more) and R Studio. Here are some of the basics in each program!
+#R code hi &amp;lt;- &amp;#34;hello&amp;#34; hi ## [1] &amp;quot;hello&amp;quot;1+2 ## [1] 3#plot plot(cars) #python code print(2+2) ## 4Everybody stand back.</description>
+    </item>
+    
+    <item>
+      <title>Teamwork: R and Python Working Together!</title>
+      <link>/2020/05/15/teamwork-r-and-python-working-together/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/05/15/teamwork-r-and-python-working-together/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Projects</title>
       <link>/projects/</link>
       <pubDate>Sun, 02 Oct 2016 22:55:05 -0400</pubDate>
