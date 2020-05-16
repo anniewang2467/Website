@@ -53,7 +53,6 @@ print(2+2)
 ```
 
 
-
 Everybody stand back. I know regular expressions!
 
 
@@ -101,4 +100,4 @@ print(r.hi,hi)
 ```
 
 
-Alright yall: ![](/blog/2020-05-15-teamwork-r-and-python-working-together_files/0A960A51-9A23-4D7E-8AA9-E3976D12159A.jpg)
+Alright y'all: ![](/blog/2020-05-15-teamwork-r-and-python-working-together_files/0A960A51-9A23-4D7E-8AA9-E3976D12159A.jpg)
