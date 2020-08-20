@@ -20,7 +20,7 @@ theme = "hugo-sustain"
   custom_js  = []
 
 [params.social]
-  Email         = "annie.wang.2467@gmail.com"
+  Email         = "anyi.wang@utexas.edu"
   Twitter       = "Wang2467" 
 
 ## Main Menu
